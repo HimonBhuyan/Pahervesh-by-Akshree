@@ -143,8 +143,9 @@
       topBtn.style.setProperty('--scroll-deg', (pct * 3.6).toFixed(1) + 'deg');
 
       // Smooth Hero & Aura Parallax
-      if (heroImg && scrollTop < 900) {
-        heroImg.style.transform = `translate3d(0, ${(scrollTop * 0.08).toFixed(1)}px, 0) scale(${(1.02 + scrollTop * 0.00012).toFixed(4)})`;
+      const activeHeroImg = $('.hero-slide.active .hero-slide-img');
+      if (activeHeroImg && scrollTop < 950) {
+        activeHeroImg.style.transform = `translate3d(0, ${(scrollTop * 0.08).toFixed(1)}px, 0) scale(${(1.06 + scrollTop * 0.00012).toFixed(4)})`;
       }
       if (heroFloat && scrollTop < 900) {
         heroFloat.style.transform = `translate3d(0, ${(-scrollTop * 0.06).toFixed(1)}px, 0)`;
@@ -237,7 +238,98 @@
     }
     $$('.reveal:not(.in-view)').forEach((el) => revealObserver.observe(el));
     // Trigger counters immediately if hero already visible
-    if ($('.hero-metrics')) animateMetricCounters();
+    if ($('.hero-metrics-couture')) animateMetricCounters();
+  }
+
+  function initHeroSlideshow() {
+    const slides = $$('.hero-slide');
+    const tabs = $$('.hero-slide-tab');
+    const card = $('#heroFeaturedCard');
+    if (!slides.length || !tabs.length) return;
+
+    const campaigns = [
+      {
+        pid: 1,
+        titleHtml: 'Heirloom Craft,<br><em>Breezy Everyday</em><br>Elegance.',
+        desc: 'Hand-block printed Farshi Sets, featherlight Mulmul Suit Sets, and modern Indo-Western Co-ords — stitched in pure breathable cotton and delivered across India & Worldwide.',
+        ctaText: 'Explore Farshi Sets',
+        ctaHref: 'farshi-sets.php',
+        cardImg: 'assets/images/prod-blush-farshi.jpg',
+        cardTag: 'Look 01 • Signature Bestseller',
+        cardTitle: 'Gulab Lotus Farshi Set',
+        cardInr: 2890,
+      },
+      {
+        pid: 2,
+        titleHtml: 'Sindoor Kalamkari,<br><em>Woven for</em><br>Celebrations.',
+        desc: 'Deep crimson botanical motifs hand-printed on breathable handloom cotton with graceful wide-pleated Farshi trousers.',
+        ctaText: 'Shop Festive Farshi',
+        ctaHref: 'farshi-sets.php',
+        cardImg: 'assets/images/prod-crimson-farshi.jpg',
+        cardTag: 'Look 02 • Festive Edit',
+        cardTitle: 'Sindoor Kalamkari Farshi Set',
+        cardInr: 3190,
+      },
+      {
+        pid: 3,
+        titleHtml: 'Sunlit Mulmul,<br><em>Light as</em><br>Morning.',
+        desc: 'Citrus marigold block-printed 3-piece cotton suit sets with airy 2.5m dupattas made for destination haldis and sunlit brunches.',
+        ctaText: 'Explore Suit Sets',
+        ctaHref: 'suit-sets.php',
+        cardImg: 'assets/images/prod-citrus-suit.jpg',
+        cardTag: 'Look 03 • Summer Unfold',
+        cardTitle: 'Citrus Sunbeam Cotton Suit',
+        cardInr: 2490,
+      },
+    ];
+
+    let activeIdx = 0;
+    let timer;
+
+    const goToSlide = (idx) => {
+      activeIdx = (idx + campaigns.length) % campaigns.length;
+      const c = campaigns[activeIdx];
+      slides.forEach((s, i) => s.classList.toggle('active', i === activeIdx));
+      tabs.forEach((t, i) => t.classList.toggle('active', i === activeIdx));
+
+      const titleEl = $('#heroSlideTitle');
+      const descEl = $('#heroSlideDesc');
+      const ctaEl = $('#heroPrimaryCta');
+      if (titleEl) titleEl.innerHTML = c.titleHtml;
+      if (descEl) descEl.textContent = c.desc;
+      if (ctaEl) {
+        ctaEl.href = c.ctaHref;
+        ctaEl.querySelector('span').textContent = c.ctaText;
+      }
+      if (card) {
+        card.dataset.activePid = String(c.pid);
+        $('#heroCardImg').src = c.cardImg;
+        $('#heroCardTag').textContent = c.cardTag;
+        $('#heroCardTitle').textContent = c.cardTitle;
+        const priceEl = $('#heroCardPrice');
+        priceEl.dataset.inr = String(c.cardInr);
+        priceEl.textContent = formatMoney(c.cardInr);
+      }
+    };
+
+    const startAuto = () => {
+      clearInterval(timer);
+      timer = setInterval(() => goToSlide(activeIdx + 1), 6000);
+    };
+
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => {
+        goToSlide(Number(t.dataset.slideTo));
+        startAuto();
+      });
+    });
+
+    const heroSec = $('#heroSection');
+    heroSec?.addEventListener('mouseenter', () => clearInterval(timer));
+    heroSec?.addEventListener('mouseleave', startAuto);
+
+    goToSlide(0);
+    startAuto();
   }
 
   /* --------------------------------------------------------------------------
@@ -1264,7 +1356,10 @@
     $('#openWishlistBtn')?.addEventListener('click', () => openDrawer('wishlistDrawer'));
     $('#mobileWishlistBtn')?.addEventListener('click', () => openDrawer('wishlistDrawer'));
 
-    $('#heroFeaturedCard')?.addEventListener('click', () => openProductModal(1));
+    $('#heroFeaturedCard')?.addEventListener('click', () => {
+      const pid = Number($('#heroFeaturedCard')?.dataset.activePid || 1);
+      openProductModal(pid);
+    });
     $('#applyCouponBtn')?.addEventListener('click', () => applyCoupon($('#cartCouponInput').value));
     $('#proceedCheckoutBtn')?.addEventListener('click', openCheckout);
 
@@ -1389,6 +1484,7 @@
      BOOT
      -------------------------------------------------------------------------- */
   initChrome();
+  initHeroSlideshow();
   applyClientFilterFallback();
   renderCart();
   renderWishlist();

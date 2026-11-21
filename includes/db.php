@@ -12,12 +12,19 @@ function get_db(): PDO
         return $pdo;
     }
 
+    $isVercel = (bool)(getenv('VERCEL') || getenv('VERCEL_ENV'));
     $dbDir = __DIR__ . '/../database';
-    if (!is_dir($dbDir)) {
-        mkdir($dbDir, 0775, true);
+
+    if (!$isVercel && !is_dir($dbDir)) {
+        @mkdir($dbDir, 0775, true);
     }
 
-    $dbPath = $dbDir . '/pahervesh.sqlite';
+    if ($isVercel || !is_dir($dbDir) || !is_writable($dbDir)) {
+        $dbPath = rtrim(sys_get_temp_dir(), '/\\') . '/pahervesh.sqlite';
+    } else {
+        $dbPath = $dbDir . '/pahervesh.sqlite';
+    }
+
     $isNew = !file_exists($dbPath);
 
     $pdo = new PDO('sqlite:' . $dbPath, null, null, [
@@ -26,7 +33,11 @@ function get_db(): PDO
         PDO::ATTR_EMULATE_PREPARES => false,
     ]);
 
-    $pdo->exec('PRAGMA journal_mode = WAL;');
+    try {
+        $pdo->exec('PRAGMA journal_mode = WAL;');
+    } catch (Throwable $e) {
+        // Fallback silently on restricted filesystems
+    }
     $pdo->exec('PRAGMA foreign_keys = ON;');
 
     init_schema($pdo);

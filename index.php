@@ -23,61 +23,127 @@ render_page_head(
 );
 ?>
   <main id="top">
-    <!-- Editorial Hero -->
-    <section class="hero">
+    <!-- Full-Bleed Couture Editorial Hero -->
+    <section class="hero-couture" id="heroSection">
+      <!-- 3-Slide Crossfading Full-Bleed Photography -->
+      <div class="hero-slides" id="heroSlides">
+        <div class="hero-slide active" data-slide="0">
+          <img src="assets/images/hero-editorial.jpg" alt="Gulab Lotus Farshi Set in Rajasthan Courtyard" class="hero-slide-img" style="object-position: 78% 15%;">
+        </div>
+        <div class="hero-slide" data-slide="1">
+          <img src="assets/images/prod-crimson-farshi.jpg" alt="Sindoor Kalamkari Farshi Set" class="hero-slide-img" style="object-position: 76% 18%;">
+        </div>
+        <div class="hero-slide" data-slide="2">
+          <img src="assets/images/prod-citrus-suit.jpg" alt="Citrus Sunbeam Cotton Suit Set" class="hero-slide-img" style="object-position: 74% 16%;">
+        </div>
+      </div>
+
+      <!-- Feathered Ivory-Blush Veil + Cotton Paper Grain -->
+      <div class="hero-feather-veil"></div>
+      <div class="hero-paper-grain" aria-hidden="true"></div>
       <div class="hero-aura hero-aura-1"></div>
       <div class="hero-aura hero-aura-2"></div>
-      <div class="container">
-        <div class="hero-frame reveal">
-          <div class="hero-content">
-            <div class="hero-eyebrow">
-              <span class="hero-eyebrow-dot"></span>
-              Curated Cotton Ethnic &amp; Indo-Western Wear
+
+      <!-- Rotating Atelier Seal with Official Center Logo -->
+      <div class="hero-seal-stamp" aria-hidden="true">
+        <svg class="hero-seal-ring" viewBox="0 0 120 120" width="118" height="118">
+          <defs>
+            <path id="sealCircle" d="M 60, 60 m -45, 0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0"/>
+          </defs>
+          <circle cx="60" cy="60" r="54" fill="rgba(250,246,240,0.48)" stroke="rgba(68,77,54,0.16)" stroke-width="1"/>
+          <text font-size="7.6" font-weight="700" letter-spacing="2.35" fill="#444D36">
+            <textPath href="#sealCircle" textLength="272">HANDCRAFTED IN JAIPUR • PURE COTTON • </textPath>
+          </text>
+        </svg>
+        <div class="hero-seal-center">
+          <img src="assets/images/logo.jpg" alt="Pahervesh by Akshree">
+        </div>
+      </div>
+
+      <div class="container hero-couture-grid">
+        <div class="hero-content-couture">
+          <div class="hero-ornament-kicker">
+            <span class="ornament-line"></span>
+            <span class="ornament-diamond">✦</span>
+            <span>Est. Jaipur &nbsp;•&nbsp; Beauty, Uncomplicated.</span>
+            <span class="ornament-diamond">✦</span>
+            <span class="ornament-line"></span>
+          </div>
+
+          <h1 class="hero-title" id="heroSlideTitle">
+            Heirloom Craft,<br><em>Breezy Everyday</em><br>Elegance.
+          </h1>
+
+          <p class="hero-subtitle" id="heroSlideDesc">
+            Hand-block printed Farshi Sets, featherlight Mulmul Suit Sets, and modern Indo-Western Co-ords — stitched in pure breathable cotton and delivered across India &amp; Worldwide.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="farshi-sets.php" class="btn-couture" id="heroPrimaryCta">
+              <span>Explore Farshi Sets</span>
+              <span class="couture-arrow">→</span>
+            </a>
+            <a href="shop.php" class="btn-couture-outline">
+              <span>Shop All Collections</span>
+            </a>
+          </div>
+
+          <div class="hero-metrics-couture">
+            <div class="metric-item">
+              <div class="metric-val">100%</div>
+              <div class="metric-lbl">Pure Handloom Cotton</div>
             </div>
-            <h1 class="hero-title">
-              Heirloom Craft,<br><em>Breezy Everyday</em><br>Elegance.
-            </h1>
-            <p class="hero-subtitle">
-              Discover hand-block printed Farshi Sets, featherlight Mulmul Suit Sets, and modern Indo-Western Co-ords — thoughtfully stitched in pure breathable cotton and delivered across India &amp; Worldwide.
-            </p>
-            <div class="hero-ctas">
-              <a href="farshi-sets.php" class="btn btn-primary">
-                Explore Farshi Sets
-                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-              <a href="shop.php" class="btn btn-secondary">
-                Shop New Arrivals
-              </a>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <div class="metric-val">28+</div>
+              <div class="metric-lbl">Countries Shipped</div>
             </div>
-            <div class="hero-metrics">
-              <div>
-                <div class="metric-val">100%</div>
-                <div class="metric-lbl">Pure Handloom Cotton</div>
-              </div>
-              <div>
-                <div class="metric-val">28+</div>
-                <div class="metric-lbl">Countries Shipped</div>
-              </div>
-              <div>
-                <div class="metric-val">4.9 ★</div>
-                <div class="metric-lbl">Loved by Women</div>
-              </div>
+            <div class="metric-divider"></div>
+            <div class="metric-item">
+              <div class="metric-val">4.9 <span class="gold-star">★</span></div>
+              <div class="metric-lbl">Loved by Women</div>
             </div>
           </div>
 
-          <div class="hero-visual">
-            <img src="assets/images/hero-editorial.jpg" alt="Pahervesh by Akshree Blush Lotus Farshi Set" class="hero-img">
-            <div class="hero-floating-card" id="heroFeaturedCard" role="button" tabindex="0">
-              <img src="assets/images/prod-blush-farshi.jpg" alt="Gulab Lotus Farshi Set">
-              <div class="hero-floating-meta">
-                <small>Signature Bestseller</small>
-                <strong>Gulab Lotus Farshi Set</strong>
-                <span class="price-dynamic" data-inr="2890">₹2,890</span> • Quick View →
+          <!-- 3-Slide Campaign Switcher -->
+          <div class="hero-slide-controls" id="heroSlideControls" aria-label="Featured Campaign Slides">
+            <button type="button" class="hero-slide-tab active" data-slide-to="0">
+              <span class="slide-num">01</span>
+              <span class="slide-name">Gulab Farshi</span>
+              <span class="slide-bar"><i></i></span>
+            </button>
+            <button type="button" class="hero-slide-tab" data-slide-to="1">
+              <span class="slide-num">02</span>
+              <span class="slide-name">Sindoor Kalamkari</span>
+              <span class="slide-bar"><i></i></span>
+            </button>
+            <button type="button" class="hero-slide-tab" data-slide-to="2">
+              <span class="slide-num">03</span>
+              <span class="slide-name">Citrus Mulmul</span>
+              <span class="slide-bar"><i></i></span>
+            </button>
+          </div>
+        </div>
+
+        <div class="hero-right-stage">
+          <div class="hero-floating-card couture-glass" id="heroFeaturedCard" role="button" tabindex="0">
+            <img src="assets/images/prod-blush-farshi.jpg" alt="Gulab Lotus Farshi Set" id="heroCardImg">
+            <div class="hero-floating-meta">
+              <small id="heroCardTag">Look 01 • Signature Bestseller</small>
+              <strong id="heroCardTitle">Gulab Lotus Farshi Set</strong>
+              <div class="hero-card-action">
+                <span class="price-dynamic" data-inr="2890" id="heroCardPrice">₹2,890</span>
+                <span class="shop-look-link">Shop Look →</span>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <a href="#categories" class="hero-scroll-cue">
+        <span>Scroll to Unfold</span>
+        <span class="scroll-cue-line"></span>
+      </a>
     </section>
 
     <!-- Trust Strip -->
