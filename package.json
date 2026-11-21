@@ -1,0 +1,7 @@
+{
+  "name": "pahervesh-by-akshree",
+  "private": true,
+  "engines": {
+    "node": "22.x"
+  }
+}
