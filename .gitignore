@@ -1,0 +1,9 @@
+# SQLite database (auto-created & seeded on first request by includes/db.php)
+database/*.sqlite
+database/*.sqlite-wal
+database/*.sqlite-shm
+
+# OS & Editor files
+.DS_Store
+Thumbs.db
+*.log
